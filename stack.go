@@ -66,7 +66,7 @@ func (f Frame) Format(s fmt.State, verb rune) {
 	case 's':
 		switch {
 		case s.Flag('+'):
-			io.WriteString(s, f.name())
+			io.WriteString(s, funcname(f.name()))
 			io.WriteString(s, "\n\t")
 			io.WriteString(s, f.file())
 		default:
@@ -161,7 +161,7 @@ func (s *stack) StackTrace() StackTrace {
 }
 
 func callers() *stack {
-	const depth = 32
+	const depth = 7
 	var pcs [depth]uintptr
 	n := runtime.Callers(3, pcs[:])
 	var st stack = pcs[0:n]
